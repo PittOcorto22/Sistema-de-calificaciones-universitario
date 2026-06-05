@@ -1,11 +1,11 @@
-package com.edu.udelp.sistemaCalificaciones;
+package com.edu.udelp.sistemaCalificaciones.modelo;
 
 public class usuario {
     protected int id;
     protected String nombre;
     protected String correo;
     protected String contrasena;
-    protected String tipo; // "alumno", "profesor", "admin"
+    protected String tipo;
 
     public usuario(int id, String nombre, String correo, String contrasena, String tipo) {
         this.id = id;
@@ -15,7 +15,7 @@ public class usuario {
         this.tipo = tipo;
     }
 
-    // Aquí irían los getters y setters tradicionales...
+
     public String getNombre() { return nombre; }
     public String getTipo() { return tipo; }
 }

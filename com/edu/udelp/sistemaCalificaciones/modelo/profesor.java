@@ -1,4 +1,4 @@
-package com.edu.udelp.sistemaCalificaciones;
+package com.edu.udelp.sistemaCalificaciones.modelo;
 
 public class profesor extends usuario {
     private String numeroEmpleado;
