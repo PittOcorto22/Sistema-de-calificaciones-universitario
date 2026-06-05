@@ -11,7 +11,7 @@ public class conexion {
 
     private final String URL = "jdbc:mysql://localhost:3306/universidad_db";
     private final String USER = "root";
-    private final String PASS = "";
+    private final String PASS = "penedeburro";
 
     private conexion() {
         try {
