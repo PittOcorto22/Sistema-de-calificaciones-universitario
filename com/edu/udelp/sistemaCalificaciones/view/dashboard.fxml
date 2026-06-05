@@ -2,9 +2,41 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<VBox alignment="CENTER" spacing="20.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edu.udelp.sistemaCalificaciones.controller.dashboardController">
-    <Label text="Menu Principal" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-    <Label fx:id="lblBienvenida" style="-fx-font-size: 16px;"/>
-    <Button text="Cerrar Sesion" onAction="#cerrarSesion"/>
-</VBox>
+<BorderPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edu.udelp.sistemaCalificaciones.controller.dashboardController">
+
+    <top>
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 20px;">
+            <Label text="Panel de Administración" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblBienvenida" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox style="-fx-padding: 0 20px 20px 20px;" spacing="10.0">
+            <TableView fx:id="tablaUsuarios" prefHeight="300.0">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50.0">
+                        <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Nombre" prefWidth="200.0">
+                        <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Correo" prefWidth="250.0">
+                        <cellValueFactory><PropertyValueFactory property="correo" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Tipo" prefWidth="150.0">
+                        <cellValueFactory><PropertyValueFactory property="tipo" /></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+
+            <HBox spacing="15.0" alignment="CENTER">
+                <Button text="Cargar Usuarios" onAction="#cargarDatos"/>
+                <Button text="Cerrar Sesion" onAction="#cerrarSesion"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
