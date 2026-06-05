@@ -1,17 +1,22 @@
 package com.edu.udelp.sistemaCalificaciones;
 
-import com.edu.udelp.sistemaCalificaciones.db.conexion;
-import java.sql.Connection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 300, 400);
+        stage.setTitle("Sistema de Calificaciones");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void main(String[] args) {
-        Connection con = conexion.getInstancia().getConnection();
-
-        if (con != null) {
-            System.out.println("Conexion exitosa a la base de datos");
-            conexion.getInstancia().cerrar();
-        } else {
-            System.out.println("Fallo la conexion");
-        }
+        launch(args);
     }
 }
