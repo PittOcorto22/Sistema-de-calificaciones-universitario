@@ -13,7 +13,7 @@ El sistema permite que cada usuario acceda según su rol:
 
 ## Objetivo del proyecto
 
-Desarrollar una aplicación de escritorio funcional que permita gestionar la información académica de una universidad, aplicando buenas prácticas de desarrollo de software, separación de responsabilidades, persistencia de datos y control de acceso por roles.
+Desarrollar una aplicación de escritorio funcional el cual permite gestionar la información académica de una universidad, aplicando buenas prácticas de desarrollo de software, separación de responsabilidades, persistencia de datos y control de acceso por roles.
 
 ## Funcionalidades principales
 
