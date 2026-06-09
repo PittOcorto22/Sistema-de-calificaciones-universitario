@@ -3,6 +3,8 @@
 -- Host: localhost    Database: universidad_db
 -- ------------------------------------------------------
 -- Server version	9.6.0
+CREATE DATABASE IF NOT EXISTS universidad_db;
+USE universidad_db;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,11 +19,6 @@
 SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
 SET @@SESSION.SQL_LOG_BIN= 0;
 
---
--- GTID state at the beginning of the backup 
---
-
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f385ee30-f866-11f0-b3da-3814286a8139:1-184';
 
 --
 -- Table structure for table `alumno`
@@ -78,7 +75,7 @@ CREATE TABLE `calificacion` (
 
 LOCK TABLES `calificacion` WRITE;
 /*!40000 ALTER TABLE `calificacion` DISABLE KEYS */;
-INSERT INTO `calificacion` VALUES (1,3,1,100,100,100),(2,2,2,5,7,6),(3,5,1,100,100,100),(4,5,2,50,50,50),(5,7,3,90,90,90);
+INSERT INTO `calificacion` VALUES (1,3,1,100,100,100),(2,2,2,5,7,6),(3,5,1,100,100,100),(4,5,2,50,50,50);
 /*!40000 ALTER TABLE `calificacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +129,7 @@ CREATE TABLE `grupo` (
 
 LOCK TABLES `grupo` WRITE;
 /*!40000 ALTER TABLE `grupo` DISABLE KEYS */;
-INSERT INTO `grupo` VALUES (1,1,1,'Primavera 2026'),(2,2,1,'Primavera 2026'),(3,4,1,'Enero-Junio 2026');
+INSERT INTO `grupo` VALUES (1,1,1,'Primavera 2026'),(2,2,1,'Primavera 2026');
 /*!40000 ALTER TABLE `grupo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +155,7 @@ CREATE TABLE `materia` (
 
 LOCK TABLES `materia` WRITE;
 /*!40000 ALTER TABLE `materia` DISABLE KEYS */;
-INSERT INTO `materia` VALUES (1,'Programacion Orientada a Objetos',1,4),(2,'Bases de Datos Relacionales',1,4),(4,'pene',3,4),(5,'pene',1,1);
+INSERT INTO `materia` VALUES (1,'Programacion Orientada a Objetos',1,4),(2,'Bases de Datos Relacionales',1,4);
 /*!40000 ALTER TABLE `materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,4 +247,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-08 19:16:49
+-- Dump completed on 2026-06-09  8:30:32
