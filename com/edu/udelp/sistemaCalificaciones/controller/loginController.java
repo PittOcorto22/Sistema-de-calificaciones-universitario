@@ -47,7 +47,16 @@ public class loginController {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                abrirDashboard(rs.getString("nombre"));
+                String tipo = rs.getString("tipo");
+                String nombre = rs.getString("nombre");
+
+                if (tipo.equals("profesor")) {
+                    abrirPantalla(nombre, "view/profesorDashboard.fxml", "Módulo de Profesor");
+                } else if (tipo.equals("alumno")) {
+                    abrirPantalla(nombre, "view/alumnoDashboard.fxml", "Módulo de Alumno");
+                } else {
+                    abrirPantalla(nombre, "view/dashboard.fxml", "Panel de Administracion");
+                }
             } else {
                 lblMensaje.setStyle("-fx-text-fill: red;");
                 lblMensaje.setText("Credenciales incorrectas");
@@ -59,19 +68,25 @@ public class loginController {
         }
     }
 
-    private void abrirDashboard(String nombreUsuario) {
+    private void abrirPantalla(String nombreUsuario, String rutaFXML, String titulo) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/dashboard.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(rutaFXML));
+            Scene scene = new Scene(fxmlLoader.load(), 850, 550);
 
-            dashboardController controller = fxmlLoader.getController();
-            controller.setUsuario(nombreUsuario);
+            Object controlador = fxmlLoader.getController();
+            if (controlador instanceof dashboardController) {
+                ((dashboardController) controlador).setUsuario(nombreUsuario);
+            } else if (controlador instanceof profesorController) {
+                ((profesorController) controlador).setUsuario(nombreUsuario);
+            } else if (controlador instanceof alumnoController) {
+                ((alumnoController) controlador).setUsuario(nombreUsuario);
+            }
 
             Stage stageActual = (Stage) txtCorreo.getScene().getWindow();
             stageActual.close();
 
             Stage nuevoStage = new Stage();
-            nuevoStage.setTitle("Menu Principal - Sistema de Calificaciones");
+            nuevoStage.setTitle(titulo);
             nuevoStage.setScene(scene);
             nuevoStage.show();
 

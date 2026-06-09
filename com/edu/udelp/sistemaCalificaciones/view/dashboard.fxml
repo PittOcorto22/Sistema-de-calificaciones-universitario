@@ -3,40 +3,249 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
-<BorderPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edu.udelp.sistemaCalificaciones.controller.dashboardController">
+<BorderPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edu.udelp.sistemaCalificaciones.controller.dashboardController">
 
     <top>
-        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 20px;">
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 15px;">
             <Label text="Panel de Administración" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
             <Label fx:id="lblBienvenida" style="-fx-font-size: 16px;"/>
         </VBox>
     </top>
 
     <center>
-        <VBox style="-fx-padding: 0 20px 20px 20px;" spacing="10.0">
-            <TableView fx:id="tablaUsuarios" prefHeight="300.0">
-                <columns>
-                    <TableColumn text="ID" prefWidth="50.0">
-                        <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Nombre" prefWidth="200.0">
-                        <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Correo" prefWidth="250.0">
-                        <cellValueFactory><PropertyValueFactory property="correo" /></cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Tipo" prefWidth="150.0">
-                        <cellValueFactory><PropertyValueFactory property="tipo" /></cellValueFactory>
-                    </TableColumn>
-                </columns>
-            </TableView>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Gestión de Usuarios">
+                    <content>
+                        <BorderPane>
+                            <left>
+                                <VBox spacing="15.0" style="-fx-padding: 20px; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;" prefWidth="250.0">
+                                    <Label text="Nuevo Usuario" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                    <TextField fx:id="txtNombre" promptText="Nombre completo"/>
+                                    <TextField fx:id="txtCorreo" promptText="Correo institucional"/>
+                                    <PasswordField fx:id="txtContrasena" promptText="Contraseña"/>
+                                    <ComboBox fx:id="cmbTipo" promptText="Tipo de usuario" prefWidth="200.0" onAction="#actualizarEtiqueta">
+                                        <items>
+                                            <FXCollections fx:factory="observableArrayList">
+                                                <String fx:value="alumno"/>
+                                                <String fx:value="profesor"/>
+                                            </FXCollections>
+                                        </items>
+                                    </ComboBox>
+                                    <ComboBox fx:id="cmbCarreraUsuario" promptText="Carrera (Solo Alumnos)" prefWidth="200.0"/>
+                                    <TextField fx:id="txtDatoExtra" promptText="Matricula / No. Empleado"/>
+                                    <Button text="Guardar Usuario" onAction="#guardarUsuario" style="-fx-background-color: #c3924a; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="200.0"/>
+                                    <Label fx:id="lblMensajeForm" textFill="red" wrapText="true"/>
+                                </VBox>
+                            </left>
+                            <center>
+                                <VBox style="-fx-padding: 20px;" spacing="10.0">
+                                    <TableView fx:id="tablaUsuarios" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn text="ID" prefWidth="50.0">
+                                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Nombre" prefWidth="200.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Correo" prefWidth="200.0">
+                                                <cellValueFactory><PropertyValueFactory property="correo" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Tipo" prefWidth="100.0">
+                                                <cellValueFactory><PropertyValueFactory property="tipo" /></cellValueFactory>
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                    <HBox spacing="15.0" alignment="CENTER">
+                                        <Button text="Actualizar Tabla" onAction="#cargarDatos"/>
+                                        <Button text="Eliminar Seleccionado" onAction="#eliminarUsuario" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+                                        <Button text="Cerrar Sesion" onAction="#cerrarSesion"/>
+                                    </HBox>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
 
-            <HBox spacing="15.0" alignment="CENTER">
-                <Button text="Cargar Usuarios" onAction="#cargarDatos"/>
-                <Button text="Cerrar Sesion" onAction="#cerrarSesion"/>
-            </HBox>
-        </VBox>
+                <Tab text="Catálogos (Carreras y Semestres)">
+                    <content>
+                        <HBox spacing="20.0" style="-fx-padding: 20px;">
+                            <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                <Label text="Gestión de Carreras" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                <HBox spacing="10.0">
+                                    <TextField fx:id="txtNombreCarrera" promptText="Nombre de la Carrera" HBox.hgrow="ALWAYS"/>
+                                    <Button text="Guardar" onAction="#guardarCarrera" style="-fx-background-color: #c3924a; -fx-text-fill: white;"/>
+                                </HBox>
+                                <Label fx:id="lblMensajeCarrera" textFill="red" wrapText="true"/>
+                                <TableView fx:id="tablaCarreras" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn text="ID" prefWidth="50.0">
+                                            <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Nombre Carrera" prefWidth="300.0">
+                                            <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <Button text="Eliminar Seleccionada" onAction="#eliminarCarrera" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+                            </VBox>
+
+                            <Separator orientation="VERTICAL"/>
+
+                            <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                <Label text="Gestión de Semestres" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                <HBox spacing="10.0">
+                                    <TextField fx:id="txtNombreSemestre" promptText="Nombre (Ej. Cuarto Semestre)" HBox.hgrow="ALWAYS"/>
+                                    <Button text="Guardar" onAction="#guardarSemestre" style="-fx-background-color: #c3924a; -fx-text-fill: white;"/>
+                                </HBox>
+                                <Label fx:id="lblMensajeSemestre" textFill="red" wrapText="true"/>
+                                <TableView fx:id="tablaSemestres" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn text="ID" prefWidth="50.0">
+                                            <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Semestre" prefWidth="300.0">
+                                            <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <Button text="Eliminar Seleccionado" onAction="#eliminarSemestre" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Gestión de Materias">
+                    <content>
+                        <BorderPane>
+                            <left>
+                                <VBox spacing="15.0" style="-fx-padding: 20px; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;" prefWidth="250.0">
+                                    <Label text="Nueva Materia" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                    <TextField fx:id="txtNombreMateria" promptText="Nombre de la materia"/>
+                                    <ComboBox fx:id="cmbCarreraMateria" promptText="Seleccionar Carrera" prefWidth="200.0"/>
+                                    <ComboBox fx:id="cmbSemestreMateria" promptText="Seleccionar Semestre" prefWidth="200.0"/>
+                                    <Button text="Guardar Materia" onAction="#guardarMateria" style="-fx-background-color: #c3924a; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="200.0"/>
+                                    <Label fx:id="lblMensajeMateria" textFill="red" wrapText="true"/>
+                                </VBox>
+                            </left>
+                            <center>
+                                <VBox style="-fx-padding: 20px;" spacing="10.0">
+                                    <TableView fx:id="tablaMaterias" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn text="ID" prefWidth="50.0">
+                                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Nombre Materia" prefWidth="250.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="ID Carrera" prefWidth="100.0">
+                                                <cellValueFactory><PropertyValueFactory property="idCarrera" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Semestre" prefWidth="100.0">
+                                                <cellValueFactory><PropertyValueFactory property="idSemestre" /></cellValueFactory>
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                    <HBox spacing="15.0" alignment="CENTER">
+                                        <Button text="Actualizar Tabla" onAction="#cargarMaterias"/>
+                                        <Button text="Eliminar Seleccionada" onAction="#eliminarMateria" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+                                    </HBox>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Gestión de Grupos">
+                    <content>
+                        <BorderPane>
+                            <left>
+                                <VBox spacing="15.0" style="-fx-padding: 20px; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;" prefWidth="250.0">
+                                    <Label text="Abrir Nuevo Grupo" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                    <ComboBox fx:id="cmbMateriaGrupo" promptText="Seleccionar Materia" prefWidth="200.0"/>
+                                    <ComboBox fx:id="cmbProfesorGrupo" promptText="Seleccionar Profesor" prefWidth="200.0"/>
+                                    <TextField fx:id="txtPeriodoGrupo" promptText="Periodo (Ej. Otoño 2026)"/>
+                                    <Button text="Guardar Grupo" onAction="#guardarGrupo" style="-fx-background-color: #c3924a; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="200.0"/>
+                                    <Label fx:id="lblMensajeGrupo" textFill="red" wrapText="true"/>
+                                </VBox>
+                            </left>
+                            <center>
+                                <VBox style="-fx-padding: 20px;" spacing="10.0">
+                                    <TableView fx:id="tablaGrupos" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn text="ID" prefWidth="50.0">
+                                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Materia" prefWidth="250.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombreMateria" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Profesor" prefWidth="200.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombreProfesor" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Periodo" prefWidth="120.0">
+                                                <cellValueFactory><PropertyValueFactory property="periodo" /></cellValueFactory>
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                    <HBox spacing="15.0" alignment="CENTER">
+                                        <Button text="Actualizar Tabla" onAction="#cargarGrupos"/>
+                                        <Button text="Eliminar Seleccionado" onAction="#eliminarGrupo" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+                                    </HBox>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Modificar Calificaciones">
+                    <content>
+                        <BorderPane>
+                            <left>
+                                <VBox spacing="15.0" style="-fx-padding: 20px; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;" prefWidth="250.0">
+                                    <Label text="Corregir Acta" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                    <TextField fx:id="txtParcialesAdmin" promptText="Calificación Parciales"/>
+                                    <TextField fx:id="txtActividadesAdmin" promptText="Calificación Actividades"/>
+                                    <Button text="Actualizar Nota" onAction="#actualizarCalificacionAdmin" style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="200.0"/>
+                                    <Label fx:id="lblMensajeCalificacionesAdmin" textFill="red" wrapText="true"/>
+                                </VBox>
+                            </left>
+                            <center>
+                                <VBox style="-fx-padding: 20px;" spacing="10.0">
+                                    <TableView fx:id="tablaCalificacionesAdmin" VBox.vgrow="ALWAYS" onMouseClicked="#seleccionarCalificacionAdmin">
+                                        <columns>
+                                            <TableColumn text="ID" prefWidth="40.0">
+                                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Alumno" prefWidth="150.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombreAlumno" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Materia" prefWidth="200.0">
+                                                <cellValueFactory><PropertyValueFactory property="nombreGrupo" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Parciales" prefWidth="80.0">
+                                                <cellValueFactory><PropertyValueFactory property="parciales" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Actividades" prefWidth="80.0">
+                                                <cellValueFactory><PropertyValueFactory property="actividades" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Promedio" prefWidth="80.0">
+                                                <cellValueFactory><PropertyValueFactory property="promedioFinal" /></cellValueFactory>
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                    <HBox spacing="15.0" alignment="CENTER">
+                                        <Button text="Actualizar Lista" onAction="#cargarTodasCalificaciones"/>
+                                    </HBox>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
     </center>
 
 </BorderPane>

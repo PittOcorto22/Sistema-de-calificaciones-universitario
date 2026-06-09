@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edu.udelp.sistemaCalificaciones.controller.alumnoController">
+
+    <top>
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 20px;">
+            <Label text="Mis Calificaciones" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblBienvenida" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox style="-fx-padding: 20px;" spacing="20.0">
+            <TableView fx:id="tablaCalificaciones" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="Materia" prefWidth="250.0">
+                        <cellValueFactory><PropertyValueFactory property="nombreGrupo" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Parciales" prefWidth="100.0">
+                        <cellValueFactory><PropertyValueFactory property="parciales" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Actividades" prefWidth="100.0">
+                        <cellValueFactory><PropertyValueFactory property="actividades" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Promedio Final" prefWidth="120.0">
+                        <cellValueFactory><PropertyValueFactory property="promedioFinal" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Estatus" prefWidth="120.0">
+                        <cellValueFactory><PropertyValueFactory property="estatus" /></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+            <HBox spacing="15.0" alignment="CENTER">
+                <Button text="Cerrar Sesion" onAction="#cerrarSesion" style="-fx-background-color: #c3924a; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
